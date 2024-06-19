@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{{ file_name_pdf }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Sarabun", sans-serif;
+        font-size: 12px;
+      }
+
+      .table1 tr .td {
+        width: 100px;
+      }
+
+      .table2 {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table2 th {
+        text-align: left;
+      }
+
+      .table2 thead {
+        display: table-header-group;
+      }
+
+      .table2 th,
+      .table2 td {
+        border: 1px solid black;
+        white-space: pre-wrap;
+        padding: 5px;
+      }
+      tr,
+      .page-break {
+        page-break-inside: avoid;
+        page-break-after: auto;
+      }
+      .right-align {
+        text-align: right;
+      }
+      .left-align {
+        text-align: left;
+      }
+      .mat_code_width {
+        width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    {% if is_po_upload_order_error %}
+    สินค้าดังต่อไปนี้อยู่ระหว่างดำเนินการสร้างใบสั่งซื้อ {% endif %}
+    <table class="table2">
+      <thead>
+        <tr>
+          <th>ลำดับ</th>
+          <th>รหัสสินค้า</th>
+          <th>รายการสินค้า</th>
+          <th>จำนวน</th>
+          <th>หน่วย</th>
+          <th>น้ำหนักตัน</th>
+          {% if not is_po_upload_order_error %}
+          <th>วันที่ต้องการ</th>
+          <th>วันประมาณการส่งมอบ</th>
+          {% endif %}
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in data %}
+        <tr>
+          <td>{{ item.item_no }}</td>
+          <td class="mat_code_width">{{ item.material_code }}</td>
+          <td class="mat_code_width">{{ item.material_description }}</td>
+          <td>{{ item.qty }}</td>
+          <td>{{ item.sales_unit }}</td>
+          <td class="right-align">{{ item.qty_ton }}</td>
+          {% if not is_po_upload_order_error %}
+          <td>{{ item.request_delivery_date }}</td>
+          <td>{{ item.iplan_confirm_date }}</td>
+          {% endif %}
+          <td>{{ item.message }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          {% if data %}
+          <td class="right-align" colspan="3">รวม</td>
+          <td class="left-align">{{ total_qty }}</td>
+          <td class="left-align">{{ sales_unit }}</td>
+          <td class="right-align">{{ total_qty_ton }}</td>
+          <td colspan="3"></td>
+          {% endif %}
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <br />
+    <div class="page-break">
+      {% if not is_po_upload_order_error %}
+      <table class="table1" style="margin-bottom: 20px">
+        <tr>
+          <td class="td">ออกเอกสารสั่งซื้อ</td>
+          {% if created_by == "" %}
+          <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+          {% else %}
+          <td>{{ created_by }}</td>
+          {% endif %}
+        </tr>
+      </table>
+      <table class="table1" style="margin-bottom: 20px">
+        <tr>
+          <td class="td">ผู้อนุมัติ</td>
+          <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+        </tr>
+      </table>
+
+      <table class="table1">
+        <tr>
+          <td class="td">ผู้มีอำนาจสั่งซื้อ</td>
+          <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+        </tr>
+      </table>
+      {% endif %}
+    </div>
+  </body>
+</html>

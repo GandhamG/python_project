@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <title>PO Upload</title>
+    <style>
+      .wrapper {
+        width: 500px;
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif";
+        font-size: 15px;
+        line-height: 22px;
+      }
+      .logo {
+        margin: 5px 0 25px 0;
+        display: flex;
+        transition: all 0.5s ease;
+        align-items: center;
+        border-bottom: solid 1px #eeeeee;
+        padding-bottom: 20px;
+      }
+
+      .logo__left {
+        padding: 0 20px;
+        font-size: 20px;
+        font-weight: bold;
+        border-right: solid 2px #fd0045;
+        padding-left: 0;
+      }
+
+      .logo__left_image {
+        width: 52px;
+        height: 14px;
+      }
+
+      .logo__right_image {
+        height: 28px;
+      }
+
+      .logo__right {
+        margin-left: 20px;
+        display: flex;
+      }
+      .content p {
+        margin: 0;
+        color: #222222 !important;
+      }
+
+      .logo__logo_img {
+        width: 240px;
+        height: 37px;
+      }
+
+      .logo__logo {
+        padding: 0 20px 0 0px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .default-font {
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif" !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="logo">
+        <div class="logo__logo">
+          <img class="logo__logo_img" src="cid:logo" alt="" />
+        </div>
+      </div>
+      <div class="content">
+        <p class="default-font">
+          <b>Processing Date Time</b> {{ processing_datetime_str }}
+        </p>
+        <p class="default-font"><b>PI No.</b> {{ pi_no }}</p>
+        <p class="default-font"><b>EO</b> {{ eo_no }}</p>
+        <p class="default-font"><b>Sold to code</b> {{ sold_to_code }}</p>
+        <br />
+        <p class="default-font">
+          <b>Status (call to {{ call_type_sap }})</b> Failed
+        </p>
+        <p class="default-font">
+          <b>Status (call to {{ call_type_iplan }})</b> Failed
+        </p>
+        <br />
+        <p class="default-font">
+          <b>Error message</b>
+        </p>
+        {% for message in error_messages %}
+        <p class="default-font">{{ message }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

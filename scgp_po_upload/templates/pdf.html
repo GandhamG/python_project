@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ file_name_pdf }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Sarabun", sans-serif;
+        font-size: 11px;
+      }
+
+      .title {
+        text-align: center;
+      }
+
+      .table1 tr .td {
+        width: 100px;
+      }
+
+      .table2 {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table2 th {
+        text-align: left;
+      }
+
+      .table2 th,
+      .table2 td {
+        border: 1px solid black;
+        white-space: nowrap;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>
+      ได้รับข้อมูลเพื่อสร้างใบสั่งซื้อลูกค้าเลขที่ {{ po_no }} เรียบร้อยแล้ว
+    </h3>
+    <h1 class="title">ใบสั่งซื้อสินค้า</h1>
+    <br />
+    <table class="table1">
+      <tr>
+        <td class="td">ผู้ขาย</td>
+        <td>{{ sale_org_name }}</td>
+      </tr>
+      <tr>
+        <td class="td">เลขที่ใบสั่งซื้อ</td>
+        <td>{{ so_no }}</td>
+      </tr>
+      <tr>
+        <td class="td">เลขที่ PO ลูกค้า</td>
+        <td>{{ po_no }}</td>
+      </tr>
+      <tr>
+        <td class="td">ชื่อไฟล์อ้างอิง</td>
+        <td>{{ file_name }}</td>
+      </tr>
+      <tr>
+        <td class="td">วันเวลาที่บันทึก</td>
+        <td>{{ date_time }}</td>
+      </tr>
+      <tr>
+        <td class="td">ชื่อลูกค้า</td>
+        <td>{{ sold_to_no_name }}</td>
+      </tr>
+      <tr>
+        <td class="td">&nbsp;</td>
+        <td>{{ sold_to_address }}</td>
+      </tr>
+      <tr>
+        <td class="td">สถานที่ส่ง</td>
+        <td>{{ ship_to_no_name }}</td>
+      </tr>
+      {% if ship_to_address != "" %}
+      <tr>
+        <td class="td">&nbsp;</td>
+        <td>{{ ship_to_address }}</td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td class="td">เงื่อนไขการชำระเงิน</td>
+        <td>{{ payment_method_name }}</td>
+      </tr>
+      <tr>
+        <td class="td">เลขที่ Contract</td>
+        <td>{{ contract_no_name }}</td>
+      </tr>
+      <tr>
+        <td class="td">หมายเหตุ</td>
+        <td>{{ remark_order_info }}</td>
+      </tr>
+      {% if errors %}
+      <tr>
+        <td class="td">&nbsp;</td>
+        <td>
+          {% for error in errors %} {{ error }}<br />
+          {% endfor %}
+        </td>
+      </tr>
+      {% endif %}
+    </table>
+    <br />
+    <table class="table2">
+      <tr>
+        <th>ลำดับ</th>
+        <th>รายการสินค้า</th>
+        <th>จำนวน</th>
+        <th>หน่วย</th>
+        <th>น้ำหนักตัน</th>
+        <th>วันที่ต้องการ</th>
+        <th>วันประมาณการส่งมอบ</th>
+      </tr>
+      {% for item in data %}
+      <tr>
+        <td>{{ item.item_no }}</td>
+        <td>{{ item.material_description }}</td>
+        <td>{{ item.qty }}</td>
+        <td>ROL</td>
+        <td>{{ item.qty_ton }}</td>
+        <td>{{ item.request_delivery_date }}</td>
+        <td>{{ item.iplan_confirm_date }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br />
+    <table class="table1" style="margin-bottom: 20px">
+      <tr>
+        <td class="td">ออกเอกสารสั่งซื้อ</td>
+        {% if created_by == "" %}
+        <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+        {% else %}
+        <td>{{ created_by }}</td>
+        {% endif %}
+      </tr>
+    </table>
+    <table class="table1" style="margin-bottom: 20px">
+      <tr>
+        <td class="td">ผู้อนุมัติ</td>
+        <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+      </tr>
+    </table>
+
+    <table class="table1">
+      <tr>
+        <td class="td">ผู้มีอำนาจสั่งซื้อ</td>
+        <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+name: Build
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - ci/*
+      - develop
+      - uat
+      - main
+
+env:
+  BENCH_PATH: report.json
+  COVERAGE_PATH: coverage.xml
+  DATABASE_URL: "postgres://saleor:saleor@postgres:5432/saleor"
+  SECRET_KEY: ci-test
+
+jobs:
+  # Run linters and Django related checks
+  lint:
+    name: Linters and Checks
+    runs-on: ubuntu-latest
+    container: python:3.8
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v3
+      - name: Install system dependencies
+        run: apt-get install -y libpq-dev
+      - name: Cache Install
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements_dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        run: |
+          python -m pip install wheel
+          python -m pip install -r requirements_dev.txt
+      - name: Cache pre-commit
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('**/.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pre-commit-
+      - name: Run Linters and Checks
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          pre-commit run --all
+        if: ${{ always() }}
+
+  # Run tests
+  test:
+    name: Pytest and SonarCloud Scan
+    runs-on: ubuntu-latest
+    container: python:3.8
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: saleor
+          POSTGRES_USER: saleor
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install system dependencies
+        run: apt-get install -y libpq-dev
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements_dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        run: |
+          python -m pip install wheel
+          python -m pip install -r requirements_dev.txt
+      - name: Run tests
+        run: |
+          pytest \
+            --cov -n 4 \
+            --cov-report xml \
+            --junitxml=xunit-reports/junit-report.xml \
+            --django-db-bench=${{ env.BENCH_PATH }}
+      - name: SonarCloud Scan # Run sonarcloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  # Run add reviewers
+  add-reviews:
+    name: Add reviewers
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kentaro-m/auto-assign-action@v1.2.5
+        with:
+          configuration-path: ".github/auto_assign.yml"

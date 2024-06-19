@@ -1,0 +1,191 @@
+{
+  "piMessageId": "PIPXXXXXXXXXXXXXXXX",
+  "salesdocumentin": "0410273310",
+  "testrun": "TRUE",
+  "orderHeaderIn": {
+    "reqDateH": "13/06/2022",
+    "incoterms1": "CIF",
+    "incoterms2": "จ.สมุทรปราการ2",
+    "paymentTerms": "NT90",
+    "poNo": "",
+    "purchaseDate1": "",
+    "priceGroup": "03",
+    "priceDate": "13/06/2022",
+    "currency": "THB",
+    "customerGroup": "45",
+    "salesDistrict": "075003",
+    "shippingCondition": "01",
+    "customerGroup1": "01",
+    "customerGroup2": "",
+    "customerGroup3": "",
+    "customerGroup4": "",
+    "customerGroup5": "",
+    "deliveryBlock": "",
+    "refDoc": "0410082672"
+  },
+  "orderHeaderInX": {
+    "reqDate": true,
+    "incoterms1": true,
+    "incoterms2": true,
+    "paymentTerms": true,
+    "poNo": true,
+    "purchaseDate": true,
+    "priceGroup": true,
+    "priceDate": true,
+    "currency": true,
+    "customerGroup": true,
+    "salesDistrict": true,
+    "shippingCondition": true,
+    "customerGroup1": true,
+    "customerGroup2": true,
+    "customerGroup3": true,
+    "customerGroup4": true,
+    "customerGroup5": true,
+    "deliveryBlock": true
+  },
+  "orderPartners": [
+    {
+      "partnerRole": "WE",
+      "partnerNo": "0001002813",
+      "itemNo": "000000",
+      "addressLink": "12address"
+    }
+  ],
+  "PartnerAddreses": [
+    {
+      "addressNo": "1",
+      "name1": "นาย Customer Name1",
+      "name2": "",
+      "name3": "",
+      "name4": "",
+      "city": "",
+      "zipCode": "10220",
+      "district": "บางซื่อ",
+      "street": "",
+      "streetSuppl1": "",
+      "streetSuppl2": "",
+      "streetSuppl3": "",
+      "location": "",
+      "transportZone": "ZATH010029",
+      "country": "TH",
+      "telephoneNo": ""
+    }
+  ],
+  "orderItemsIn": [
+    {
+      "itemNo": "000010",
+      "targetQty": 5,
+      "salesUnit": "ROL",
+      "plant": "754F",
+      "shippingPoint": "MY0067",
+      "route": "7504",
+      "orderNo": "MPS/PO/SKT023/21",
+      "poItemNo": "000010",
+      "itemCategory": "ZKS4",
+      "priceGroup1": "",
+      "priceGroup2": "",
+      "poNo": "K00040064300100001WY0000000-1730896",
+      "poitemNoS": "000010",
+      "usage": "100",
+      "overdlvtol": 0,
+      "unlimitTol": "",
+      "unddlvTol": 99,
+      "reasonReject": "93",
+      "paymentTerms": "TL60",
+      "denominato": 1,
+      "numconvert": 1000,
+      "refDoc": "0410082672",
+      "refDocIt": "000050"
+    }
+  ],
+  "orderItemsInx": [
+    {
+      "itemNo": "000010",
+      "updateflag": "U",
+      "targetQty": true,
+      "salesUnit": true,
+      "plant": true,
+      "shippingPoint": true,
+      "route": true,
+      "purchaseOrderNo": true,
+      "poItemNo": true,
+      "itemCategory?:description": true,
+      "priceGroup1": true,
+      "priceGroup2": true,
+      "poNo": true,
+      "poDate": true,
+      "poitemNoS": true,
+      "overdlvtol": true,
+      "unlimitTol": true,
+      "unddlvTol": true,
+      "reasonReject": true,
+      "paymentTerms": true,
+      "denominato": true,
+      "numconvert": true
+    }
+  ],
+  "orderSchedulesIn": [
+    {
+      "itemNo": "000010",
+      "scheduleLine": "0001",
+      "scheduleLinecate": "ZC",
+      "reqDate": "2022-06-07",
+      "reqQty": 10,
+      "confirmQty": 3,
+      "deliveryBlock": ""
+    }
+  ],
+  "orderSchedulesInx": [
+    {
+      "itemNo": "000010",
+      "scheduleLine": "0001",
+      "updateflag": true,
+      "scheduleLineCate": true,
+      "requestDate": true,
+      "reqiestQuantity": true,
+      "confirmQuantity": true,
+      "deliveryBlock": true
+    }
+  ],
+  "orderConditionsIn": [
+    {
+      "itemNo": "000010",
+      "conditionType": "ZPR2",
+      "conditionValue": 4816,
+      "currency": "THB",
+      "conditionUnit": "ROL",
+      "conditionPUnit": "1"
+    }
+  ],
+  "orderConditionsInX": [
+    {
+      "itemNo": "000010",
+      "conditionType": "ZPR2",
+      "updateFlag": true,
+      "conditionValue": true,
+      "currency": true,
+      "conditionUnit": true,
+      "conditionPUnit": true
+    }
+  ],
+  "orderCfgsValues": [
+    {
+      "configId": "000010",
+      "instId": "000010",
+      "charc": "SDKUOM",
+      "value": "MM"
+    }
+  ],
+  "orderText": [
+    {
+      "itemNo": "000000",
+      "textId": "Z016",
+      "langu": "EN",
+      "textLine": [
+        {
+          "textLine": "เพิ่มบอร์ดใหม่ส่วนลด 14%"
+        }
+      ]
+    }
+  ]
+}

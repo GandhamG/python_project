@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <title>PO Upload</title>
+    <style>
+      .wrapper {
+        width: 1500px;
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif";
+        font-size: 15px;
+        line-height: 22px;
+      }
+      .logo {
+        margin: 5px 0 25px 0;
+        display: flex;
+        transition: all 0.5s ease;
+        align-items: center;
+        border-bottom: solid 1px #eeeeee;
+        padding-bottom: 20px;
+      }
+
+      .logo__left {
+        padding: 0 20px;
+        font-size: 20px;
+        font-weight: bold;
+        border-right: solid 2px #fd0045;
+        padding-left: 0;
+      }
+
+      .logo__left_image {
+        width: 52px;
+        height: 14px;
+      }
+
+      .logo__right_image {
+        height: 28px;
+      }
+
+      .logo__right {
+        margin-left: 20px;
+        display: flex;
+      }
+
+      .content {
+        font-size: 15px;
+        line-height: 22px;
+      }
+      .content p {
+        margin: 0;
+        color: #222222 !important;
+      }
+      th {
+        text-align: left;
+      }
+
+      .logo__logo_img {
+        width: 240px;
+        height: 37px;
+      }
+
+      .logo__logo {
+        padding: 0 20px 0 0px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .default-font {
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif" !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="logo">
+        <div class="logo__logo">
+          <img class="logo__logo_img" src="cid:logo" alt="" />
+        </div>
+      </div>
+      <div class="content">
+        <h3 class="default-font">เรียน ผู้เกี่ยวข้อง</h3>
+        <h3 class="default-font">Error: Alternated Material auto change</h3>
+        <p class="default-font">Order No. : {{ order_no }}</p>
+        <p class="default-font">PO no : {{ po_no }}</p>
+        <p class="default-font">Sold to Code-Name : {{ sold_to_code_name }}</p>
+        <p class="default-font">Ship to Code-Name : {{ ship_to_code_name }}</p>
+        <p class="default-font">
+          Contract No. - Description : {{ contract_no }}
+        </p>
+        <p class="default-font">
+          Request delivery Date: {{ request_delivery_date }}
+        </p>
+        <br />
+        <p class="default-font">
+          Item : จำนวนรวม {{ total_no_of_items }} รายการ
+        </p>
+        <br />
+        <table>
+          <caption></caption>
+          <tr>
+            <th class="default-font">Item No.</th>
+            <th class="default-font">Material description</th>
+            <th class="default-font">Error</th>
+          </tr>
+          {% for item in item_errors %}
+          <tr>
+            <td class="default-font">{{ item.item_no }}</td>
+            <td class="default-font">{{ item.material_description }}</td>
+            <td class="default-font">{{ item.error }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

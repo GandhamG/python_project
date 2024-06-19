@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{{ file_name_pdf }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Sarabun", sans-serif;
+        font-size: 11px;
+      }
+      .content1,
+      .content2 {
+        width: 100%;
+      }
+
+      .content1 {
+        border-collapse: collapse;
+      }
+
+      .content1 thead {
+        display: table-header-group;
+      }
+
+      .content1 thead tr {
+        border: 2px solid #dedede;
+        height: 50px;
+        border-right: 0;
+        border-left: 0;
+      }
+      .ready_for_ship,
+      .queue_for_product,
+      .cancel_items {
+        text-decoration: underline;
+      }
+
+      thead {
+        display: table-row-group;
+      }
+      .material-description-and-code {
+        max-width: 200px;
+        overflow: hidden;
+        word-wrap: break-word;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="content1">
+      <thead>
+        <tr>
+          <td>ลำดับที่</td>
+          <td>Remark</td>
+          <td style="min-width: 200px">รหัสสินค้า</td>
+          <td style="min-width: 200px">รายการสินค้า</td>
+          <td style="min-width: 35px">จำนวนสั่ง</td>
+          <td>พร้อมส่ง</td>
+          <td>รอผลิต</td>
+          <td>หน่วย</td>
+          <td>วันที่ต้องการ</td>
+          <td>วันประมาณการ<br />ส่งมอบ</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="ready_for_ship">สินค้าพร้อมส่ง</th>
+        </tr>
+        {% for line_ready in data_order_lines_ready %}
+        <tr style="text-align: left">
+          <td>{{ line_ready.item_no }}/{{ line_ready.item_no }}</td>
+          <td>{{ line_ready.remark }}</td>
+          <td>
+            <div class="material-description-and-code">
+              {{ line_ready.material_code }}
+            </div>
+          </td>
+          <td>
+            <div class="material-description-and-code">
+              {{ line_ready.material_description }}
+            </div>
+          </td>
+          <td>{{ line_ready.qty_roll }}</td>
+          <td>{{ line_ready.qty_of_ready_to_ship }}</td>
+          <td>{{ line_ready.qty_of_queue_for_production }}</td>
+          <td>{{ line_ready.rol }}</td>
+          <td>{{ line_ready.request_delivery_date }}</td>
+          <td>{{ line_ready.iplan_confirm_date }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th class="queue_for_product">สินค้ารอผลิต</th>
+        </tr>
+        {% for line_queue in data_order_lines_queue %}
+        <tr style="text-align: left">
+          <td>{{ line_queue.item_no }}/{{ line_queue.item_no }}</td>
+          <td>{{ line_queue.remark }}</td>
+          <td>
+            <div class="material-description-and-code">
+              {{ line_queue.material_code }}
+            </div>
+          </td>
+          <td>
+            <div class="material-description-and-code">
+              {{ line_queue.material_description }}
+            </div>
+          </td>
+          <td>{{ line_queue.qty_roll }}</td>
+          <td>{{ line_queue.qty_of_ready_to_ship }}</td>
+          <td>{{ line_queue.qty_of_queue_for_production }}</td>
+          <td>{{ line_queue.rol }}</td>
+          <td>{{ line_queue.request_delivery_date }}</td>
+          <td>{{ line_queue.iplan_confirm_date }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th class="cancel_items" id="cancel_items_header">สินค้ายกเลิก</th>
+        </tr>
+        {% for lines_cancel in data_order_lines_cancel %}
+        <tr style="text-align: left">
+          <td>{{ lines_cancel.item_no }}/{{ lines_cancel.item_no }}</td>
+          <td>{{ lines_cancel.remark }}</td>
+          <td>
+            <div class="material-description-and-code">
+              {{ lines_cancel.material_code }}
+            </div>
+          </td>
+          <td>
+            <div class="material-description-and-code">
+              {{ lines_cancel.material_description }}
+            </div>
+          </td>
+          <td>{{ lines_cancel.qty_roll }}</td>
+          <td>{{ lines_cancel.qty_of_ready_to_ship }}</td>
+          <td>{{ lines_cancel.qty_of_queue_for_production }}</td>
+          <td>{{ lines_cancel.rol }}</td>
+          <td>{{ lines_cancel.request_delivery_date }}</td>
+          <td>{{ lines_cancel.iplan_confirm_date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

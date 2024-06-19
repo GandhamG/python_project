@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{{ file_name_pdf }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+                  body {
+                    font-family: "Sarabun", sans-serif;
+                    font-size: 11px;
+                  }
+
+                  .table1 tr .td {
+                    width: 100px;
+                  }
+
+                  .table2 {
+                    width: 100%;
+                    border-collapse: collapse;
+            <!--        table-layout: fixed;-->
+                    white-wrap: wrap;
+                    margin-left: 5px;
+                    overflow-x: auto;
+                  }
+
+                  .table2 th {
+                    text-align: left;
+                  }
+
+                  .table2 thead {
+                    display: table-header-group;
+                  }
+
+                  .table2 th,
+                  .table2 td {
+                    border: 1px solid black;
+                    word-wrap: break-word;
+                    white-space: wrap;
+                    overflow: hidden;
+                    padding: 5px;
+                  }
+                  tr,
+                  .page-break {
+                    page-break-inside: avoid;
+                    page-break-after: auto;
+                  }
+                  .right-align {
+                    text-align: right;
+                  }
+                  .left-align {
+                    text-align: left;
+                  }
+                  .table3 {
+      <!--              width: 100%;-->
+                    border-collapse: collapse;
+                    display: inline-block;
+                  }
+                  .table3 td {
+                    padding: 5px;
+                  }
+                  .table-head {
+                    width: 50px;
+                    display: table-cell;
+                  }
+                  .td1 {
+                    vertical-align: top;
+                  }
+                  .td2 {
+                    vertical-align: top;
+                    width: 125px;
+                    display: table-cell;
+                  }
+                  .num-column {
+                    width: 28px !important;
+                  }
+                  .num-column-unit {
+                    width: 32px !important;
+                  }
+                  .num-column-message {
+                    width: 47px !important;
+                  }
+                  .num-column-mat-code {
+                    width: 70px !important;
+                  }
+                  .num-column-mat-desc {
+                    width: 82px !important;
+                  }
+                   .num-column-price {
+                    width: 62px !important;
+                  }
+                  .num-column-date {
+                    width: 62px !important;
+                  }
+                  .num-column-qty {
+                    width: 25px !important;
+                  }
+
+          .right-align {
+              text-align: right;
+          }
+           .center-align {
+              text-align: center;
+          }
+            .footer-container {
+              margin-left: 300px; /* Adjust the value as needed */
+          }
+    </style>
+  </head>
+  <body>
+    {% if is_eo_upload_order_error %}
+    สินค้าดังต่อไปนี้อยู่ระหว่างดำเนินการสร้างใบสั่งซื้อ {% endif %}
+    <table class="table2" width="100%">
+      <thead>
+        <tr>
+          <th class="num-column">ลำดับ</th>
+          <th class="table-head num-column-mat-code">รหัสสินค้า</th>
+          <th class="table-head num-column-mat-desc">รายการสินค้า</th>
+          <th>จำนวน</th>
+          <th class="num-column-unit">หน่วย</th>
+          <th class="num-column-price">ราคา</th>
+          <th class="num-column-price">ราคารวม</th>
+          <th class="num-column-date">วันที่ต้องการ</th>
+          <th class="num-column-date">วันที่ส่งสินค้า</th>
+          <th class="num-column-message">Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in data %}
+        <tr>
+          <td class="td1 num-column center-align" valign="top">
+            {{ item.item_no }}
+          </td>
+          <td class="td2 num-column-mat-code" valign="top">
+            {{ item.material_code }}
+          </td>
+          <td class="td2 num-column-mat-desc" valign="top">
+            {{ item.material_desc }}
+          </td>
+          <td class="td1 right-align" valign="top">{{ item.quantity }}</td>
+          <td class="td1 num-column-unit" valign="top">
+            {{ item.sales_unit }}
+          </td>
+          {% if item.bom_flag and item.parent_item_no %}
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          {% else %}
+          <td class="td1 num-column-price right-align" valign="top">
+            {{ item.formatted_price_per_unit }}
+          </td>
+          <td class="td1 num-column-price right-align" valign="top">
+            {{ item.formatted_net_price }}
+          </td>
+          <td class="td1 num-column-date" valign="top">
+            {{ item.original_request_date }}
+          </td>
+          <td class="td1 num-column-date" valign="top">
+            {{ item.request_date }}
+          </td>
+          {% endif %} {% if item.message %}
+          <td class="td1 num-column-message" valign="top">{{item.message}}</td>
+          {% else %}
+          <td></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <table class="table3 footer-container">
+      <tbody>
+        <br />
+        <tr>
+          <!--          <td style="width: 55%; text-align: right">รวมค่าสินค้า</td>-->
+          <!--          <td style="width: 45%">-->
+          <td style="width:3px text-align: right">รวมค่าสินค้า</td>
+          <td>
+            <strong>{{footer_details.formatted_net_total_price}} บาท</strong>
+          </td>
+        </tr>
+        <tr>
+          <!--          <td style="width: 75%; text-align: right">ภาษีมูลค่าเพิ่ม</td>-->
+          <!--          <td style="width: 25%">-->
+          <td style="width:1px text-align: right">ภาษีมูลค่าเพิ่ม</td>
+          <td>
+            <strong>{{footer_details.formatted_total_vat}} บาท</strong>
+          </td>
+        </tr>
+        <tr>
+          <!--          <td style="width: 75%; text-align: right">รวมมูลค่าทั้งสิ้น</td>-->
+          <!--          <td style="width: 25%">-->
+          <td style="margin-left: 5px text-align: right">รวมมูลค่าทั้งสิ้น</td>
+          <td>
+            <strong
+              >{{footer_details.formatted_order_amount_after_vat}} บาท</strong
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <br />
+    <div class="page-break">
+      {% if not is_po_upload_order_error %}
+      <table class="table1" style="margin-bottom: 20px">
+        <tr>
+          <td class="td">ออกเอกสารสั่งซื้อ</td>
+          <td style="border-bottom: 1px solid black; width: 100px">
+            {{order_header.order_created_by}}
+          </td>
+        </tr>
+      </table>
+
+      <table class="table1" style="margin-bottom: 20px">
+        <tr>
+          <td class="td">ผู้อนุมัติ</td>
+          <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+        </tr>
+      </table>
+
+      <table class="table1">
+        <tr>
+          <td class="td">ผู้มีอำนาจสั่งซื้อ</td>
+          <td style="border-bottom: 1px solid black; width: 100px">&nbsp;</td>
+        </tr>
+      </table>
+      {% endif %}
+    </div>
+  </body>
+</html>

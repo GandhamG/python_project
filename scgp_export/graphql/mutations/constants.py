@@ -1,0 +1,25 @@
+ORDER_HEADER_FIELD_FROM_DB_TO_SAP = {
+    "request_date": "reqDate",
+    "place_of_delivery": "incoterms2",
+    "po_no": "poNo",
+    "description": "description",
+    "unloading_point": "unloadingPoint",
+    "usage": "usage",
+    "internal_comment_to_warehouse": "internal_comment_to_warehouse",
+    "port_of_discharge": "port_of_discharge",
+    "port_of_loading": "port_of_loading",
+    "no_of_containers": "no_of_container",
+    "shipping_mark": "shipping_mark",
+    "uom": "uom",
+    "gw_uom": "gw_uom",
+    "etd": "etd",
+    "eta": "eta",
+    "dlc_expiry_date": "dlc_expiry_date",
+    "dlc_no": "dlc_no",
+    "dlc_latest_delivery_date": "dlc_latest_delivery_date",
+    "payment_instruction": "Payment_Instruction",
+    "remark": "remark",
+    "production_information": "Product_Information",
+}
+
+MATERIAL_OS_PLANT = ["754F", "7531", "7533"]

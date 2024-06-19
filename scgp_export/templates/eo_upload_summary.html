@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <title>PO Upload</title>
+    <style>
+      .wrapper {
+        width: 100%;
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif";
+        font-size: 15px;
+        line-height: 22px;
+      }
+
+      .logo {
+        margin: 5px 0 25px 0;
+        display: flex;
+        transition: all 0.5s ease;
+        align-items: center;
+        border-bottom: solid 1px #eeeeee;
+        padding-bottom: 20px;
+      }
+
+      .logo__left {
+        padding: 0 20px;
+        font-size: 20px;
+        font-weight: bold;
+        border-right: solid 2px #fd0045;
+        padding-left: 0;
+      }
+
+      .logo__left_image {
+        width: 52px;
+        height: 14px;
+      }
+
+      .logo__right_image {
+        height: 28px;
+      }
+
+      .logo__right {
+        margin-left: 20px;
+        display: flex;
+      }
+
+      .content p {
+        margin: 0;
+        color: #222222 !important;
+      }
+
+      table,
+      td,
+      th {
+        border: 1px solid #c1c7d0;
+        text-align: left;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        box-sizing: border-box;
+        padding: 0px 8px;
+        width: 16.66%;
+      }
+
+      .logo__logo_img {
+        width: 240px;
+        height: 37px;
+      }
+
+      .logo__logo {
+        padding: 0 20px 0 0px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .default-font {
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif" !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="logo">
+        <div class="logo__logo">
+          <img class="logo__logo_img" src="cid:logo" alt="" />
+        </div>
+      </div>
+      <div class="content">
+        <p class="default-font">
+          <b>Summary data as of {{ summary_datetime_str }}</b>
+        </p>
+        <br />
+        <p class="default-font">
+          <b>Total file</b> {{ total_file_number }} รายการ
+        </p>
+        <p class="default-font">
+          <b>Success</b> {{ success_file_number }} รายการ
+        </p>
+        <p class="default-font"><b>Fail</b> {{ failed_file_number }} รายการ</p>
+        <br />
+        {% if success_items %}
+        <p class="default-font">
+          <b>Success transaction</b>
+        </p>
+        <table class="default-font" role="presentation">
+          <tbody>
+            <tr>
+              <td>
+                <p class="default-font">
+                  <strong>PI No.</strong>
+                </p>
+              </td>
+              <td>
+                <p class="default-font">
+                  <strong>EO No.</strong>
+                </p>
+              </td>
+              <td>
+                <p class="default-font">
+                  <strong>Sold to name</strong>
+                </p>
+              </td>
+              <td>
+                <p class="default-font">
+                  <strong>Ship to name</strong>
+                </p>
+              </td>
+              <td>
+                <p class="default-font">
+                  <strong>Port of discharge</strong>
+                </p>
+              </td>
+              <td>
+                <p class="default-font">
+                  <strong>Create/Change</strong>
+                </p>
+              </td>
+            </tr>
+            {% for item in success_items %}
+            <tr>
+              <td>
+                <p class="default-font">{{ item.pi_no }}</p>
+              </td>
+              <td>
+                <p class="default-font">{{ item.eo_no }}</p>
+              </td>
+              <td>
+                <p class="default-font">{{ item.sold_to_name }}</p>
+              </td>
+              <td>
+                <p class="default-font">{{ item.ship_to_name }}</p>
+              </td>
+              <td>
+                <p class="default-font">{{ item.port_of_discharge }}</p>
+              </td>
+              <td>
+                <p class="default-font">{{ item.action_type }}</p>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

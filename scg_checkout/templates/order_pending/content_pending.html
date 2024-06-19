@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Pending Order Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Sarabun", sans-serif;
+        font-size: 11px;
+      }
+      .content {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 5px;
+      }
+      .product_group {
+        margin-bottom: 5px;
+      }
+
+      .content thead,
+      .sold_to,
+      .product_group {
+        display: table-header-group;
+      }
+
+      td,
+      th {
+        border: 1px solid #2e2e2e;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      td {
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    {% load custom_filters %} {% for item in response %}
+    <div class="sold_to" style="margin-top: 5px">
+      Sold-To: {{ item.sold_to }} {{ item.sold_to_name }}
+    </div>
+    {% for item1 in item.product_groups %}
+    <div class="product_group" style="padding-left: 42px">
+      {{ item1.product_group }}
+    </div>
+    <table class="content">
+      <thead>
+        <tr>
+          <th style="font-size: 7px; min-width: 50px">
+            <b>วันที่ประมาณ<br />การส่งมอบ</b>
+          </th>
+          <th style="font-size: 7px; min-width: 50px">
+            <b>วันที่สั่งซื้อ<br />(Create Date)</b>
+          </th>
+          <th style="min-width: 50px; font-size: 7px">
+            <b
+              >เลขที่ใบสั่งซื้อ PO<br />
+              (PO No.)</b
+            >
+          </th>
+          <th style="min-width: 50px; font-size: 7px; font-weight: 800">
+            <b>เลขที่ใบสั่งซื้อ SO<br />(SO No.)</b>
+          </th>
+          <th style="min-width: 35px; font-size: 7px; font-weight: 800">
+            <b>ลำดับที่<br />(Item No.)</b>
+          </th>
+          <th style="min-width: 90px; font-size: 7px; font-weight: 800">
+            <b>รายการสินค้า<br />(Material Code)</b>
+          </th>
+          <th style="min-width: 100px; font-size: 7px; font-weight: 800">
+            <b>รายละเอียดสินค้า<br />(Material Description)</b>
+          </th>
+          <th style="min-width: 35px; font-size: 7px; font-weight: 800">
+            <b>จำนวนสั่งซื้อ<br />(Order Qty)</b>
+          </th>
+          <th style="min-width: 35px; font-size: 7px; font-weight: 800">
+            <b>จำนวนค้างส่ง<br />(Pending Qty)</b>
+          </th>
+          <th style="min-width: 35px; font-size: 7px; font-weight: 800">
+            <b>พร้อมส่ง<br />(ATP Qty)</b>
+          </th>
+          <th style="min-width: 35px; font-size: 7px; font-weight: 800">
+            <b>รอผลิต<br />(CTP Qty)</b>
+          </th>
+          <th style="min-width: 35px; font-size: 7px; font-weight: 800">
+            <b>ส่งแล้ว<br />(Delivery Qty)</b>
+          </th>
+          <th style="min-width: 35px; font-size: 7px; font-weight: 800">
+            <b>หน่วย<br />(Unit)</b>
+          </th>
+          <th style="min-width: 100px; font-size: 7px; font-weight: 800">
+            <b>สถานที่ส่ง<br />(Sold to)</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order_line in item1.order_lines %}
+        <tr style="text-align: center; font-size: 7px">
+          <td>{{ order_line.confirm_date }}</td>
+          <td>{{ order_line.order_date }}</td>
+          <td>{{ order_line.po_no }}</td>
+          <td>{{ order_line.so_no }}</td>
+          <td>{{ order_line.item_no }}</td>
+          <td>{{ order_line.material_code }}</td>
+          <td>{{ order_line.material_description }}</td>
+          <td>{{ order_line.order_qty }}</td>
+          {% if order_line.pending_qty or order_line.pending_qty == 0 %}
+          <td>{{ order_line.pending_qty }}</td>
+          {% else %}
+          <td></td>
+          {% endif %} {% if order_line.atp_qty or order_line.atp_qty == 0 %}
+          <td>{{ order_line.atp_qty }}</td>
+          {% else %}
+          <td></td>
+          {% endif %} {% if order_line.ctp_qty or order_line.ctp_qty == 0 %}
+          <td>{{ order_line.ctp_qty }}</td>
+          {% else %}
+          <td></td>
+          {% endif %} {% if order_line|is_delivery_qty %}
+          <td>{{ order_line.delivery_qty }}</td>
+          {% else %}
+          <td></td>
+          {% endif %}
+          <td>{{ order_line.sale_unit }}</td>
+          <td>{{ order_line.ship_to_name }}</td>
+        </tr>
+        {% endfor %} {% for summary in item1.summary %}
+        <tr style="text-align: center">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td style="font-weight: bold">Total ({{ summary.sale_unit }})</td>
+          <td style="font-size: 8px">{{ summary.order_qty }}</td>
+          <td style="font-size: 8px">{{ summary.pending_qty }}</td>
+          <td style="font-size: 8px">{{ summary.atp_qty }}</td>
+          <td style="font-size: 8px">{{ summary.ctp_qty }}</td>
+          <td style="font-size: 8px">{{ summary.delivery_qty }}</td>
+          <td style="font-size: 8px">{{ summary.sale_unit }}</td>
+          <td>&nbsp;</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endfor %} {% endfor %}
+  </body>
+</html>

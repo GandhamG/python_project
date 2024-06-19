@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PO Upload</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .wrapper {
+        width: 1500px;
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif";
+        font-size: 15px;
+        line-height: 22px;
+      }
+      .logo {
+        margin: 5px 0 25px 0;
+        display: flex;
+        transition: all 0.5s ease;
+        align-items: center;
+        border-bottom: solid 1px #eeeeee;
+        padding-bottom: 20px;
+      }
+
+      .logo__left {
+        padding: 0 20px;
+        font-size: 20px;
+        font-weight: bold;
+        border-right: solid 2px #fd0045;
+        padding-left: 0;
+      }
+
+      .logo__left_image {
+        width: 52px;
+        height: 14px;
+      }
+
+      .logo__right_image {
+        height: 28px;
+      }
+
+      .logo__right {
+        margin-left: 20px;
+        display: flex;
+      }
+
+      .logo__logo_img {
+        width: 240px;
+        height: 37px;
+      }
+
+      .logo__logo {
+        padding: 0 20px 0 0px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .content p {
+        margin: 0;
+        color: #222222 !important;
+      }
+
+      .default-font {
+        font-family: "Sarabun", Arial, sans-serif, "Microsoft Sans Serif" !important;
+        font-size: 15px !important;
+        line-height: 22px !important;
+      }
+      th {
+        padding-left: 20px;
+        font-weight: normal;
+        text-align: left;
+      }
+      td {
+        padding-left: 20px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="content">
+        <p class="default-font">ได้รับใบสั่งซื้อสินค้าเรียบร้อยแล้ว</p>
+        {% if order_number %}
+        <p class="default-font">เลขที่ใบสั่งซื้อ : {{ order_number }}</p>
+        {% else %}
+        <p class="default-font">
+          เลขที่ใบสั่งซื้อ :
+          <span style="color: #ff0000">Not Generated/ Failed</span>
+        </p>
+        {% endif %}
+        <p class="default-font">เลขที่ P/O ลูกค้า : {{ customer_po_number }}</p>
+        <p class="default-font">ชื่อ File อ้างอิง : {{ file_name }}</p>
+        <p class="default-font">วันเวลาที่บันทึก : {{ record_date }}</p>
+        <p class="default-font">ชื่อลูกค้า : {{ customer_name }}</p>
+        <p class="default-font">สถานที่ส่ง: {{ place_of_delivery }}</p>
+        <p class="default-font">เงื่อนไขการชำระเงิน : {{ payment_terms }}</p>
+        <p class="default-font">การส่งสินค้า : {{ shipping }}</p>
+        <p class="default-font">เลขที่ Contract : {{ contract_number }}</p>
+        {% if note %}
+        <p class="default-font">หมายเหตุ :</p>
+        {% for line in note %}
+        <p class="default-font">&nbsp; {{ line }}</p>
+        {% endfor %} {% endif %} {% if error_messages %}
+        <p class="default-font">Error :</p>
+        {% for message in error_messages %}
+        <p class="default-font">&nbsp; {{ message }}</p>
+        {% endfor %} {% endif %} {% if alt_mat_errors %}
+        <p class="default-font">Error Alternated Material:</p>
+        <table>
+          <caption></caption>
+          <tr>
+            <th class="default-font">Item No.</th>
+            <th class="default-font">Material description</th>
+            <th class="default-font">Error</th>
+          </tr>
+          {% for item in alt_mat_errors %}
+          <tr>
+            <td class="default-font">{{ item.item_no }}</td>
+            <td class="default-font">{{ item.material_description }}</td>
+            <td class="default-font">{{ item.error }}</td>
+          </tr>
+          {% endfor %} {% endif %}
+        </table>
+      </div>
+      <div class="logo">
+        <div class="logo__logo">
+          <img class="logo__logo_img" src="cid:logo" alt="" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
