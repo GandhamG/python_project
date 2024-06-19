@@ -1,0 +1,17 @@
+pytest_plugins = [
+    "saleor.tests.fixtures",
+    "saleor.plugins.tests.fixtures",
+    "saleor.graphql.tests.fixtures",
+    "saleor.graphql.channel.tests.fixtures",
+    "saleor.graphql.account.tests.benchmark.fixtures",
+    "saleor.graphql.order.tests.benchmark.fixtures",
+    "saleor.graphql.giftcard.tests.benchmark.fixtures",
+    "saleor.plugins.webhook.tests.subscription_webhooks.fixtures",
+    "scg_checkout.tests.fixtures",
+    "scg_customer.tests.fixtures",
+    "scgp_customer.tests.fixtures",
+    "scgp_export.tests.fixtures",
+    "scgp_user_management.tests.fixtures",
+    "sap_migration.tests.fixtures",
+    "sap_master_data.tests.fixtures",
+]
